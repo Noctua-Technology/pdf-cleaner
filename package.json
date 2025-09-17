@@ -1,0 +1,34 @@
+{
+  "name": "@bots/clean-pdf",
+  "version": "1.0.0",
+  "type": "module",
+  "files": [
+    "pkg"
+  ],
+  "main": "pkg/clean_pdf.js",
+  "types": "pkg/clean_pdf.d.ts",
+  "module": "pkg/clean_pdf.js",
+  "scripts": {
+    "build": "wireit",
+    "test": "wireit"
+  },
+  "wireit": {
+    "build": {
+      "command": "./scripts/build.sh",
+      "clean": "if-file-deleted",
+      "files": [
+        "src/**",
+        "scripts/build.sh"
+      ],
+      "output": [
+        "target/**",
+        "pkg/**"
+      ],
+      "dependencies": []
+    },
+    "test": {
+      "command": "cargo test"
+    }
+  },
+  "dependencies": {}
+}

@@ -1,4 +1,5 @@
 RUSTFLAGS='--cfg getrandom_backend="wasm_js"' \
 wasm-pack build \
     --target web \
-    --scope noctuatech
+    --scope bots \
+    --no-pack
