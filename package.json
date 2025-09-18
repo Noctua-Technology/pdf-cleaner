@@ -1,6 +1,6 @@
 {
   "name": "@noctuatech/pdf-cleaner",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "type": "module",
   "files": [
     "pkg/pdf_cleaner_bg.wasm",
