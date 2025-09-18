@@ -1,38 +1,17 @@
 {
   "name": "@noctuatech/pdf-cleaner",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "type": "module",
   "files": [
-    "pkg"
+    "pkg/pdf_cleaner_bg.wasm",
+    "pkg/pdf_cleaner_bg.wasm.d.ts",
+    "pkg/pdf_cleaner.d.ts",
+    "pkg/pdf_cleaner.js"
   ],
-  "main": "pkg/pdf_cleaner.js",
-  "module": "pkg/pdf_cleaner.js",
+  "main": "./pkg/pdf_cleaner.js",
+  "module": "./pkg/pdf_cleaner.js",
   "exports": {
-    ".": {
-      "import": "./pkg/pdf_cleaner.js"
-    }
-  },
-  "scripts": {
-    "build": "wireit",
-    "test": "wireit"
-  },
-  "wireit": {
-    "build": {
-      "command": "./scripts/build.sh",
-      "clean": "if-file-deleted",
-      "files": [
-        "src/**",
-        "scripts/build.sh"
-      ],
-      "output": [
-        "target/**",
-        "pkg/**"
-      ],
-      "dependencies": []
-    },
-    "test": {
-      "command": "cargo test"
-    }
+    ".": "./pkg/pdf_cleaner.js"
   },
   "dependencies": {}
 }
