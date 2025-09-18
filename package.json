@@ -1,13 +1,17 @@
 {
-  "name": "@bots/clean-pdf",
-  "version": "1.0.0",
+  "name": "@noctuatech/pdf-cleaner",
+  "version": "0.0.1",
   "type": "module",
   "files": [
     "pkg"
   ],
-  "main": "pkg/clean_pdf.js",
-  "types": "pkg/clean_pdf.d.ts",
-  "module": "pkg/clean_pdf.js",
+  "main": "pkg/pdf_cleaner.js",
+  "module": "pkg/pdf_cleaner.js",
+  "exports": {
+    ".": {
+      "import": "./pkg/pdf_cleaner.js"
+    }
+  },
   "scripts": {
     "build": "wireit",
     "test": "wireit"
