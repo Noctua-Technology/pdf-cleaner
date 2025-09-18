@@ -2,23 +2,22 @@ name: Rust
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 env:
   CARGO_TERM_COLOR: always
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Install wasm-pack
-      run: cargo install wasm-pack
-    - name: Build
-      run: wasm-pack build --target web --scope noctuatech
-    - name: Run tests
-      run: cargo test --verbose
+      - uses: actions/checkout@v4
+      - name: Install wasm-pack
+        run: cargo install wasm-pack
+      - name: Build
+        run: ./scripts/build.sh
+      - name: Run tests
+        run: cargo test --verbose
