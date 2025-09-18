@@ -4,7 +4,9 @@ type FilterOperations = (
   operationsToRemove: string[]
 ) => Promise<Uint8Array>;
 
-export function cleaner(): Promise<{
+interface Cleaner {
   removeText: RemoveText;
   filterOperations: FilterOperations;
-}>;
+}
+
+export function cleaner(): Promise<Cleaner>;
