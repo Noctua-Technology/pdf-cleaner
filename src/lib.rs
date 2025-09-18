@@ -1,5 +1,5 @@
-mod filter_operations;
-mod remove_text;
+pub mod filter_operations;
+pub mod remove_text;
 mod utils;
 
 use wasm_bindgen::prelude::*;
