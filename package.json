@@ -9,10 +9,10 @@
     "pkg/pdf_cleaner.js",
     "main.js"
   ],
-  "main": "./pkg/main.js",
-  "module": "./pkg/main.js",
+  "main": "./main.js",
+  "module": "./main.js",
   "exports": {
-    ".": "./pkg/main.js"
+    ".": "./main.js"
   },
   "dependencies": {}
 }

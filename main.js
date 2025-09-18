@@ -7,7 +7,7 @@ const wasm = await fs.readFile(
   path.join(import.meta.dirname, "pkg/pdf_cleaner_bg.wasm")
 );
 
-export async function getModule() {
+export async function load() {
   await sourceInit({ module_or_path: wasm });
 
   return { removeText, filterOperations };
