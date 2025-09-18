@@ -7,6 +7,7 @@
     "pkg/pdf_cleaner_bg.wasm.d.ts",
     "pkg/pdf_cleaner.d.ts",
     "pkg/pdf_cleaner.js",
+    "main.d.ts",
     "main.js"
   ],
   "main": "./main.js",
