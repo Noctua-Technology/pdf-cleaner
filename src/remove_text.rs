@@ -1,8 +1,3 @@
-use lopdf::{
-    content::{Content, Operation},
-    Dictionary, Document, Object, Stream,
-};
-use std::collections::HashSet;
 use std::error::Error;
 
 use crate::filter_operations::filter_operations;
