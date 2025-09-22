@@ -16,5 +16,8 @@
   "exports": {
     ".": "./main.js"
   },
+  "scripts": {
+    "prepublishOnly": "./scripts/build.sh"
+  },
   "dependencies": {}
 }
