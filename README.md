@@ -16,37 +16,57 @@ All methods operate on a PDF provided as a `Uint8Array` (or a Node.js `Buffer` w
 
 Initializes the library and returns the available operations.
 
-Signature:
-
 ```ts
-async function cleaner(): Promise<Cleaner>
+import { cleaner } from "@nocutatech/pdf-cleaner";
+
+const { /* Cleaner Instance */ } = await cleaner();
 ```
 
-Returns an object with the following methods:
+### Cleaner.filterOperations
 
-- `removeText(bytes: Uint8Array): Uint8Array` — removes text drawing operations from the PDF and returns the cleaned PDF bytes.
-
-- `filterOperations(bytes: Uint8Array, operators: string[], mode: Mode): Uint8Array` — filters content stream operators according to the provided list and mode (see `Mode` enum below).
-
-- `leaveOnlyText(bytes: Uint8Array): Uint8Array` — keeps only text drawing operators and removes other content.
-
-Example:
+Filters content stream operators according to the provided list and mode (see `Mode` enum below).
 
 ```ts
-import fs from "node:fs/promises";
 import { cleaner, Mode } from "@nocutatech/pdf-cleaner";
+import fs from "node:fs/promises";
 
-const { removeText, filterOperations } = await cleaner();
+const { filterOperations } = await cleaner();
 
-const pdf = await fs.readFile("./test.pdf");
+const embeddedImagesRemoved = await filterOperations(
+  await fs.readFile("./test.pdf"),
+  ["BI", "ID", "EI"],
+  Mode.Remove
+);
+```
 
-// Remove text from the PDF
-const withoutText = await removeText(pdf);
-await fs.writeFile("./no-text.pdf", withoutText);
+### Cleaner.removeText
 
-// Remove specific operators (example operators are PDF content stream operators like 'Tj', 'TJ', 'Do', etc.)
-const cleaned = await filterOperations(pdf, ["Tj", "TJ"], Mode.Remove);
-await fs.writeFile("./filtered.pdf", cleaned);
+Removes text drawing operations from the PDF and returns the cleaned PDF bytes.
+
+```ts
+import { cleaner } from "@nocutatech/pdf-cleaner";
+import fs from "node:fs/promises";
+
+const { removeText } = await cleaner();
+
+const withoutText = await removeText(
+  await fs.readFile("./test.pdf")
+);
+```
+
+### Cleaner.leaveOnlyText
+
+Keeps only text drawing operators and removes other content.
+
+```ts
+import { cleaner } from "@nocutatech/pdf-cleaner";
+import fs from "node:fs/promises";
+
+const { leaveOnlyText } = await cleaner();
+
+const onlyText = await leaveOnlyText(
+  await fs.readFile("./test.pdf")
+);
 ```
 
 ### Types / enums
