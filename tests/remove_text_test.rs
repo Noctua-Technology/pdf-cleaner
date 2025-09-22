@@ -2,7 +2,7 @@ use std::fs;
 
 use lopdf::content::Content;
 
-use pdf_cleaner::{self, remove_text::PDF_TEXT_OPERATORS};
+use pdf_cleaner::{self, text::PDF_TEXT_OPERATORS};
 
 #[test]
 fn removes_all_text_operations() {

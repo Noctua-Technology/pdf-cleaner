@@ -2,6 +2,7 @@
   "name": "@noctuatech/pdf-cleaner",
   "version": "0.0.5",
   "type": "module",
+  "description": "A library for cleaning PDF files by filtering out specified operations. Remove text or other unwanted elements from PDFs.",
   "files": [
     "pkg/pdf_cleaner_bg.wasm",
     "pkg/pdf_cleaner_bg.wasm.d.ts",

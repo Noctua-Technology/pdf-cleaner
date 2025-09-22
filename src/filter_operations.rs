@@ -4,11 +4,23 @@ use lopdf::{
 };
 use std::collections::HashSet;
 use std::error::Error;
+use wasm_bindgen::prelude::*;
+
+#[derive(PartialEq)]
+#[wasm_bindgen]
+pub enum Mode {
+    Keep,
+    Remove,
+}
 
 /**
  * Parses an existing PDF, removes all specified operations.
  */
-pub fn filter_operations(buffer: Vec<u8>, operators: Vec<&str>) -> Result<Vec<u8>, Box<dyn Error>> {
+pub fn filter_operations(
+    buffer: Vec<u8>,
+    operators: Vec<&str>,
+    mode: Mode,
+) -> Result<Vec<u8>, Box<dyn Error>> {
     // 1. Load the document
     let mut doc = Document::load_mem(buffer.as_slice())?;
 
@@ -24,15 +36,21 @@ pub fn filter_operations(buffer: Vec<u8>, operators: Vec<&str>) -> Result<Vec<u8
         let content = Content::decode(&content_bytes)?;
 
         // 4. Filter the operations
-        let non_text_operations: Vec<Operation> = content
+        let remaining_operations: Vec<Operation> = content
             .operations
             .into_iter()
-            .filter(|op| !text_operators.contains(op.operator.as_str()))
+            .filter(|op| {
+                if mode == Mode::Keep {
+                    text_operators.contains(op.operator.as_str())
+                } else {
+                    !text_operators.contains(op.operator.as_str())
+                }
+            })
             .collect();
 
         // 5. Create a new content stream
         let new_content = Content {
-            operations: non_text_operations,
+            operations: remaining_operations,
         };
 
         let new_content_bytes = new_content.encode()?;
