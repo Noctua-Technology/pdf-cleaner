@@ -14,15 +14,15 @@ All methods operate on a PDF provided as a `Uint8Array` (or a Node.js `Buffer` w
 
 ### cleaner()
 
-Initializes the library and returns the available operations.
+Initializes the library and returns the PDFDocument class.
 
 ```ts
 import { cleaner } from "@nocutatech/pdf-cleaner";
 
-const { /* Cleaner Instance */ } = await cleaner();
+const { PDFDocument } = await cleaner();
 ```
 
-### Cleaner.filterOperations
+### PDFDocument.filterOperations
 
 Filters content stream operators according to the provided list and mode (see `Mode` enum below).
 
@@ -30,10 +30,13 @@ Filters content stream operators according to the provided list and mode (see `M
 import { cleaner, Mode } from "@nocutatech/pdf-cleaner";
 import fs from "node:fs/promises";
 
-const { filterOperations } = await cleaner();
+const { PDFDocument } = await cleaner();
 
-const embeddedImagesRemoved = await filterOperations(
-  await fs.readFile("./test.pdf"),
+const doc = await PDFDocument.fromBytes(
+  await fs.readFile("./test.pdf")
+);
+
+const embeddedImagesRemoved = await doc.filterOperations(
   ["BI", "ID", "EI"],
   Mode.Remove
 );
@@ -44,14 +47,16 @@ const embeddedImagesRemoved = await filterOperations(
 Removes text drawing operations from the PDF and returns the cleaned PDF bytes.
 
 ```ts
-import { cleaner } from "@nocutatech/pdf-cleaner";
+import { cleaner, Mode } from "@nocutatech/pdf-cleaner";
 import fs from "node:fs/promises";
 
-const { removeText } = await cleaner();
+const { PDFDocument } = await cleaner();
 
-const withoutText = await removeText(
+const doc = await PDFDocument.fromBytes(
   await fs.readFile("./test.pdf")
 );
+
+const embeddedImagesRemoved = await doc.removeText();
 ```
 
 ### Cleaner.leaveOnlyText
@@ -59,14 +64,16 @@ const withoutText = await removeText(
 Keeps only text drawing operators and removes other content.
 
 ```ts
-import { cleaner } from "@nocutatech/pdf-cleaner";
+import { cleaner, Mode } from "@nocutatech/pdf-cleaner";
 import fs from "node:fs/promises";
 
-const { leaveOnlyText } = await cleaner();
+const { PDFDocument } = await cleaner();
 
-const onlyText = await leaveOnlyText(
+const doc = await PDFDocument.fromBytes(
   await fs.readFile("./test.pdf")
 );
+
+const embeddedImagesRemoved = await doc.leaveOnlyText();
 ```
 
 ### Types / enums

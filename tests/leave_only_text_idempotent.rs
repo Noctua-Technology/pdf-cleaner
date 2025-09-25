@@ -2,17 +2,21 @@ use std::fs;
 
 use lopdf::content::Content;
 
-use pdf_cleaner::leave_only_text;
+use pdf_cleaner::PDFDocument;
 
 #[test]
 fn leave_only_text_is_idempotent() {
     let input = fs::read("tests/files/test.pdf").expect("failed to read test.pdf");
 
+    let mut doc = PDFDocument::from_bytes(&input);
+
     // First run
-    let cleaned1 = leave_only_text(input.clone()).expect("first leave_only_text failed");
+    let cleaned1 = doc.leave_only_text().expect("first leave_only_text failed");
 
     // Second run on the cleaned output
-    let cleaned2 = leave_only_text(cleaned1.clone()).expect("second leave_only_text failed");
+    let cleaned2 = doc
+        .leave_only_text()
+        .expect("second leave_only_text failed");
 
     // Byte-for-byte equality can fail due to non-semantic PDF differences
     // (object ordering, metadata, compression). Instead we validate logical

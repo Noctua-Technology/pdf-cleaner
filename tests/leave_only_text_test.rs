@@ -2,12 +2,14 @@ use std::fs;
 
 use lopdf::content::Content;
 
-use pdf_cleaner::{self, text::PDF_TEXT_OPERATORS};
+use pdf_cleaner::{self, PDFDocument, PDF_TEXT_OPERATORS};
 
 #[test]
 fn keeps_only_text_operations() {
     // Read the sample PDF from the repo's mock directory
     let input = fs::read("tests/files/test.pdf").expect("failed to read mock/test.pdf");
+
+    let mut doc = PDFDocument::from_bytes(&input);
 
     // Load the original PDF to inspect baseline operator counts
     let original_doc = lopdf::Document::load_mem(&input).expect("failed to load original pdf");
@@ -41,7 +43,9 @@ fn keeps_only_text_operations() {
     assert!(original_text_ops > 0, "Test input has no text operators");
 
     // Call the public wrapper exposed in `lib.rs`. It returns Result<Vec<u8>, JsValue>
-    let cleaned = pdf_cleaner::leave_only_text(input).expect("leave_only_text returned an error");
+    let cleaned = doc
+        .leave_only_text()
+        .expect("leave_only_text returned an error");
 
     // Load the cleaned PDF and inspect page content streams
     let doc = lopdf::Document::load_mem(&cleaned).expect("failed to load cleaned pdf");

@@ -17,13 +17,10 @@ pub enum Mode {
  * Parses an existing PDF, removes all specified operations.
  */
 pub fn filter_operations(
-    buffer: Vec<u8>,
+    doc: &mut Document,
     operators: Vec<&str>,
     mode: Mode,
 ) -> Result<Vec<u8>, Box<dyn Error>> {
-    // 1. Load the document
-    let mut doc = Document::load_mem(buffer.as_slice())?;
-
     // 2. Define the set of all PDF text operators
     let text_operators: HashSet<&str> = operators.iter().cloned().collect();
 

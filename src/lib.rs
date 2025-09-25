@@ -1,39 +1,55 @@
-pub mod filter_operations;
-pub mod text;
+mod filter_operations;
+mod text;
 mod utils;
 
+use crate::filter_operations::Mode;
+use lopdf::Document;
+pub use text::PDF_TEXT_OPERATORS;
 use wasm_bindgen::prelude::*;
 
-use crate::filter_operations::Mode;
-
-#[wasm_bindgen(js_name = filterOperations)]
-pub fn filter_operations(
-    bytes: Vec<u8>,
-    operators: Vec<String>,
-    mode: Mode,
-) -> Result<Vec<u8>, JsValue> {
-    match filter_operations::filter_operations(
-        bytes,
-        operators.iter().map(AsRef::as_ref).collect(),
-        mode,
-    ) {
-        Ok(cleaned_bytes) => Ok(cleaned_bytes),
-        Err(e) => Err(JsValue::from_str(&format!("Error: {}", e))),
-    }
+#[wasm_bindgen]
+pub struct PDFDocument {
+    doc: Document,
 }
 
-#[wasm_bindgen(js_name = removeText)]
-pub fn remove_text(bytes: Vec<u8>) -> Result<Vec<u8>, JsValue> {
-    match text::remove_text(bytes) {
-        Ok(cleaned_bytes) => Ok(cleaned_bytes),
-        Err(e) => Err(JsValue::from_str(&format!("Error: {}", e))),
-    }
-}
+#[wasm_bindgen]
+impl PDFDocument {
+    #[wasm_bindgen(js_name = fromBytes)]
+    pub fn from_bytes(bytes: &[u8]) -> Self {
+        let doc = Document::load_mem(&bytes).expect("Failed to load PDF document");
 
-#[wasm_bindgen(js_name = leaveOnlyText)]
-pub fn leave_only_text(bytes: Vec<u8>) -> Result<Vec<u8>, JsValue> {
-    match text::leave_only_text(bytes) {
-        Ok(cleaned_bytes) => Ok(cleaned_bytes),
-        Err(e) => Err(JsValue::from_str(&format!("Error: {}", e))),
+        PDFDocument { doc }
+    }
+
+    #[wasm_bindgen(js_name = filterOperations)]
+    pub fn filter_operations(
+        &mut self,
+        operators: Vec<String>,
+        mode: Mode,
+    ) -> Result<Vec<u8>, JsValue> {
+        match filter_operations::filter_operations(
+            &mut self.doc,
+            operators.iter().map(AsRef::as_ref).collect(),
+            mode,
+        ) {
+            Ok(cleaned_bytes) => Ok(cleaned_bytes),
+            Err(e) => Err(JsValue::from_str(&format!("Error: {}", e))),
+        }
+    }
+
+    #[wasm_bindgen(js_name = removeText)]
+    pub fn remove_text(&mut self) -> Result<Vec<u8>, JsValue> {
+        match text::remove_text(&mut self.doc) {
+            Ok(cleaned_bytes) => Ok(cleaned_bytes),
+            Err(e) => Err(JsValue::from_str(&format!("Error: {}", e))),
+        }
+    }
+
+    #[wasm_bindgen(js_name = leaveOnlyText)]
+    pub fn leave_only_text(&mut self) -> Result<Vec<u8>, JsValue> {
+        match text::leave_only_text(&mut self.doc) {
+            Ok(cleaned_bytes) => Ok(cleaned_bytes),
+            Err(e) => Err(JsValue::from_str(&format!("Error: {}", e))),
+        }
     }
 }

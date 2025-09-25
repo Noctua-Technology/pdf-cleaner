@@ -1,5 +1,7 @@
 use std::error::Error;
 
+use lopdf::Document;
+
 use crate::filter_operations::{filter_operations, Mode};
 
 pub const PDF_TEXT_OPERATORS: [&str; 17] = [
@@ -26,10 +28,10 @@ pub const PDF_TEXT_OPERATORS: [&str; 17] = [
  * Parses an existing PDF, removes all text operations,
  * and saves the result to a new file.
  */
-pub fn remove_text(buffer: Vec<u8>) -> Result<Vec<u8>, Box<dyn Error>> {
-    filter_operations(buffer, PDF_TEXT_OPERATORS.to_vec(), Mode::Remove)
+pub fn remove_text(doc: &mut Document) -> Result<Vec<u8>, Box<dyn Error>> {
+    filter_operations(doc, PDF_TEXT_OPERATORS.to_vec(), Mode::Remove)
 }
 
-pub fn leave_only_text(buffer: Vec<u8>) -> Result<Vec<u8>, Box<dyn Error>> {
-    filter_operations(buffer, PDF_TEXT_OPERATORS.to_vec(), Mode::Keep)
+pub fn leave_only_text(doc: &mut Document) -> Result<Vec<u8>, Box<dyn Error>> {
+    filter_operations(doc, PDF_TEXT_OPERATORS.to_vec(), Mode::Keep)
 }
