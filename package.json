@@ -1,6 +1,6 @@
 {
   "name": "@noctuatech/pdf-cleaner",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "type": "module",
   "description": "A library for cleaning PDF files by filtering out specified operations. Remove text or other unwanted elements from PDFs.",
   "files": [
