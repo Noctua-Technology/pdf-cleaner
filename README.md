@@ -17,9 +17,9 @@ All methods operate on a PDF provided as a `Uint8Array` (or a Node.js `Buffer` w
 Initializes the library and returns the PDFDocument class.
 
 ```ts
-import { cleaner } from "@nocutatech/pdf-cleaner";
+import { cleaner } from "@noctuatech/pdf-cleaner";
 
-const { PDFDocument } = await cleaner();
+const PDFCleaner = await cleaner();
 ```
 
 ### PDFDocument.filterOperations
@@ -27,10 +27,10 @@ const { PDFDocument } = await cleaner();
 Filters content stream operators according to the provided list and mode (see `Mode` enum below).
 
 ```ts
-import { cleaner, Mode } from "@nocutatech/pdf-cleaner";
+import { cleaner, Mode } from "@noctuatech/pdf-cleaner";
 import fs from "node:fs/promises";
 
-const { PDFDocument } = await cleaner();
+const PDFCleaner = await cleaner();
 
 const doc = await PDFDocument.fromBytes(
   await fs.readFile("./test.pdf")
@@ -47,10 +47,10 @@ const embeddedImagesRemoved = await doc.filterOperations(
 Removes text drawing operations from the PDF and returns the cleaned PDF bytes.
 
 ```ts
-import { cleaner, Mode } from "@nocutatech/pdf-cleaner";
+import { cleaner, Mode } from "@noctuatech/pdf-cleaner";
 import fs from "node:fs/promises";
 
-const { PDFDocument } = await cleaner();
+const PDFCleaner = await cleaner();
 
 const doc = await PDFDocument.fromBytes(
   await fs.readFile("./test.pdf")
@@ -64,10 +64,10 @@ const embeddedImagesRemoved = await doc.removeText();
 Keeps only text drawing operators and removes other content.
 
 ```ts
-import { cleaner, Mode } from "@nocutatech/pdf-cleaner";
+import { cleaner, Mode } from "@noctuatech/pdf-cleaner";
 import fs from "node:fs/promises";
 
-const { PDFDocument } = await cleaner();
+const PDFCleaner = await cleaner();
 
 const doc = await PDFDocument.fromBytes(
   await fs.readFile("./test.pdf")
