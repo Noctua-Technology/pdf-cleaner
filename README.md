@@ -56,7 +56,7 @@ const doc = await PDFDocument.fromBytes(
   await fs.readFile("./test.pdf")
 );
 
-const embeddedImagesRemoved = await doc.removeText();
+const documentWithNoText = await doc.removeText();
 ```
 
 ### Cleaner.leaveOnlyText
@@ -73,7 +73,7 @@ const doc = await PDFDocument.fromBytes(
   await fs.readFile("./test.pdf")
 );
 
-const embeddedImagesRemoved = await doc.leaveOnlyText();
+const documentWithOnlyText = await doc.leaveOnlyText();
 ```
 
 ### Types / enums
