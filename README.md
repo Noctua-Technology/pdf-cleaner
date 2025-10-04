@@ -1,4 +1,4 @@
-# clean-pdf
+# PDF Cleaner
 
 Module for easily removing text and other content from a pdf.
 
