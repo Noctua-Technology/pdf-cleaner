@@ -32,7 +32,7 @@ import fs from "node:fs/promises";
 
 const PDFCleaner = await cleaner();
 
-const doc = await PDFDocument.fromBytes(
+const doc = await PDFCleaner.fromBytes(
   await fs.readFile("./test.pdf")
 );
 
@@ -52,7 +52,7 @@ import fs from "node:fs/promises";
 
 const PDFCleaner = await cleaner();
 
-const doc = await PDFDocument.fromBytes(
+const doc = await PDFCleaner.fromBytes(
   await fs.readFile("./test.pdf")
 );
 
@@ -69,7 +69,7 @@ import fs from "node:fs/promises";
 
 const PDFCleaner = await cleaner();
 
-const doc = await PDFDocument.fromBytes(
+const doc = await PDFCleaner.fromBytes(
   await fs.readFile("./test.pdf")
 );
 
