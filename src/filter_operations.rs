@@ -5,7 +5,6 @@ use lopdf::{
 use std::collections::HashSet;
 use std::error::Error;
 use wasm_bindgen::prelude::*;
-use lopdf::Object::Real;
 
 #[derive(PartialEq)]
 #[wasm_bindgen]
@@ -52,10 +51,6 @@ pub fn filter_operations(
         // Save Graphics State (q): Ensure clean state management.
         new_streamed_operations.push(Operation::new("q", vec![])); 
 
-        // Set Identity Matrix (1 0 0 1 0 0 cm) to reset CTM
-        new_streamed_operations.push(Operation::new("cm", vec![
-            Real(1.0), Real(0.0), Real(0.0), Real(1.0), Real(0.0), Real(0.0)
-        ])); 
 
         // Add the filtered operations - moves all the remaining content.
         new_streamed_operations.extend(remaining_operations.into_iter()); 
