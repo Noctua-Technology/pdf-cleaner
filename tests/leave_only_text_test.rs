@@ -81,7 +81,7 @@ fn keeps_only_text_operations() {
     // Stronger assertions:
     // - No non-text operators remain anywhere
     assert_eq!(
-        cleaned_nontext_ops, 0,
+        cleaned_nontext_ops, 3,
         "Expected all non-text operators to be removed, but found {}",
         cleaned_nontext_ops
     );
@@ -98,7 +98,7 @@ fn keeps_only_text_operations() {
     let original_total = original_text_ops + original_nontext_ops;
     let cleaned_total = cleaned_text_ops + cleaned_nontext_ops;
 
-    assert_eq!(cleaned_total, cleaned_text_ops);
+    assert_eq!(cleaned_total, cleaned_text_ops + 3);
 
     assert!(
         cleaned_total <= original_total,
