@@ -44,19 +44,19 @@ pub fn filter_operations(
                 }
             })
             .collect();
-                
+
         // The two added on remaning_operations is to account for the 'q' and 'cm' operations that we are adding.
-        let mut new_streamed_operations: Vec<Operation> = Vec::with_capacity(remaining_operations.len() + 2);
+        let mut new_streamed_operations: Vec<Operation> =
+            Vec::with_capacity(remaining_operations.len() + 2);
 
         // Save Graphics State (q): Ensure clean state management.
-        new_streamed_operations.push(Operation::new("q", vec![])); 
-
+        new_streamed_operations.push(Operation::new("q", vec![]));
 
         // Add the filtered operations - moves all the remaining content.
-        new_streamed_operations.extend(remaining_operations.into_iter()); 
+        new_streamed_operations.extend(remaining_operations);
 
         // Restore Graphics State (Q) cleanup after the block.
-        new_streamed_operations.push(Operation::new("Q", vec![])); 
+        new_streamed_operations.push(Operation::new("Q", vec![]));
 
         // Create a new content stream
         let new_content = Content {
